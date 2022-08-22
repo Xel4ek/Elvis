@@ -1,0 +1,11 @@
+<p>devices-table works!</p>
+<button (click)="add()">click! </button>
+<button (click)="get()">get! </button>
+<ng-container *ngIf="loading | async else table">
+  <mat-spinner></mat-spinner>
+</ng-container>
+<ng-template #table>
+  <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+    <elvis-device *ngFor="let device of devices | async" [device]="device" cdkDrag></elvis-device>
+  </div>
+</ng-template>

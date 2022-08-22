@@ -17,7 +17,10 @@
           "apps/devices-table/src/favicon.ico",
           "apps/devices-table/src/assets"
         ],
-        "styles": ["apps/devices-table/src/styles.scss"],
+        "styles": [
+          "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
+          "apps/devices-table/src/styles.scss"
+        ],
         "scripts": []
       },
       "configurations": {
@@ -63,7 +66,10 @@
           "browserTarget": "devices-table:build:development"
         }
       },
-      "defaultConfiguration": "development"
+      "defaultConfiguration": "development",
+      "options": {
+        "proxyConfig": "apps/devices-table/proxy.conf.json"
+      }
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
