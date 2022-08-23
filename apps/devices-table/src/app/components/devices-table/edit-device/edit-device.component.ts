@@ -1,6 +1,7 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
+
 export interface Device {
   title: string;
   resolutions: [{width: number, height: number}],
@@ -10,11 +11,9 @@ export interface Device {
   selector: 'elvis-edit-device',
   templateUrl: './edit-device.component.html',
   styleUrls: ['./edit-device.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditDeviceComponent implements OnInit {
-  // @Input()
-  // data: any;
-  // title: any;
   mode = {action: 'create', title: 'Создайте'};
   form: FormGroup;
   readonly MAX_RESOLUTIONS = 4;

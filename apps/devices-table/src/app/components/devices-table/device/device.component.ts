@@ -8,6 +8,5 @@ import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DeviceComponent {
-  @Input()
-  device: any;
+  @Input() device: any;
 }

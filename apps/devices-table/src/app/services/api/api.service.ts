@@ -11,13 +11,10 @@ export class ApiService {
   get<T>() {
     return this.httpClient.get<T>(this.api)
   }
-  post<T>(data: any) {
+  post<T>(data: unknown) {
     return this.httpClient.post<T>(this.api, data)
   }
-  delete<T>(data: any) {
-    return this.httpClient.delete<T>(this.api, data)
-  }
-  put<T>(data: any) {
+  put<T>(data: unknown) {
     return this.httpClient.put<T>(this.api, data);
   }
 }

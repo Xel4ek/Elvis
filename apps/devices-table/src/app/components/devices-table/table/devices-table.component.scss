@@ -2,21 +2,27 @@
   .table-devices {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
     &__row {
+      &:nth-child(2n + 1) {
+        background: #f0eef1;
+      }
       display: grid;
       grid-template-columns: 1fr 5fr 2fr 2fr;
       min-width: 400px;
-      gap: .5rem;
       &.head {
-        border-bottom: 1px solid black;
+        border-bottom: 1px solid #4e325b;
         align-items: center;
+        background: rgba(231, 229, 234, 0.99);
+        &>div {
+          padding: .4rem;
+        }
       }
+
     }
     .hoverable {
       cursor: pointer;
       &:hover {
-        background-color: silver;
+        background-color: #dfd3e7;
       }
     }
   }
