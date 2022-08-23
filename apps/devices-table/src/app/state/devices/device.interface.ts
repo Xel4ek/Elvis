@@ -3,8 +3,7 @@ import {ResolutionInterface} from "./resolution.interface";
 export interface DevicePayload {
   title: string;
   type: string;
-  resolution: ResolutionInterface[];
-  customOrder: number;
+  resolutions: ResolutionInterface[];
 }
 export interface DeviceInterface extends DevicePayload{
   id: number;

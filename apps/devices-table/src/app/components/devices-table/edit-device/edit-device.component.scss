@@ -1,0 +1,11 @@
+:host {
+  .form__edit {
+    display: flex;
+    flex-direction: column;
+  }
+  .form__resolutions {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+  }
+}

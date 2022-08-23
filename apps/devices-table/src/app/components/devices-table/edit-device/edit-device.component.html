@@ -1,3 +1,46 @@
- <form (ngSubmit)="save()">
-  <button type="submit"> Submit</button>
+<h2 mat-dialog-title>{{mode.title}} устройство</h2>
+<mat-dialog-content class="mat-typography">
+  <form [formGroup]="form" class="form__edit">
+  <mat-form-field appearance="fill" >
+    <mat-label>Название устройства</mat-label>
+    <input matInput maxlength="140" placeholder="Моя камера" formControlName="title">
+    <mat-hint align="end">Символов {{form.controls['title'].value?.length ?? 0}}/140</mat-hint>
+    <mat-error *ngIf="formTitle?.invalid">Поле не может быть пустым</mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Тип камеры</mat-label>
+    <mat-select formControlName="type">
+      <mat-option value="Стационарная камера">Стационарная камера</mat-option>
+      <mat-option value="Поворотная камера">Поворотная камера</mat-option>
+    </mat-select>
+    <mat-error *ngIf="formType?.invalid">Поле не может быть пустым</mat-error>
+  </mat-form-field>
+
+      <mat-label>Разрешения</mat-label>
+    <div formArrayName="resolutions">
+      <div *ngFor="let item of resolutions.controls let i=index" [formGroupName]="i" class="form__resolutions">
+    <mat-form-field>
+<!--      <>-->
+      <mat-label>Расширение по ширине</mat-label>
+        <input matInput formControlName="width" type="number">
+      <span matSuffix>пикс.</span>
+      <mat-error *ngIf="resolutions.controls[i].get('width')?.invalid">Поле не может быть пустым</mat-error>
+    </mat-form-field>
+        <mat-form-field>
+          <mat-label>Расширение по высоте</mat-label>
+        <input matInput formControlName="height" type="number">
+          <span matSuffix>пикс.</span>
+          <mat-error *ngIf="resolutions.controls[i].get('height')?.invalid">Поле не может быть пустым</mat-error>
+
+        </mat-form-field>
+        <button mat-button type="button" [disabled]="resolutions.controls.length === 1" (click)="removeResolution(i)"><mat-icon>clear</mat-icon></button>
+      </div>
+    </div>
+    <button mat-button type="button" (click)="appendResolution()" *ngIf="resolutions.controls.length < MAX_RESOLUTIONS" [disabled]="resolutionsHaveError">Add</button>
   </form>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close cdkFocusInitial>Отмена</button>
+  <button mat-button [mat-dialog-close]="{mode: mode.action, form: form.value}" [disabled]="form.status ==='INVALID'" >Сохранить</button>
+</mat-dialog-actions>

@@ -8,9 +8,8 @@ interface Device {
   id: number;
   title: string;
   type: string;
-  resolution: Resolution[];
+  resolutions: Resolution[];
   updateTime: number;
-  customOrder: number;
   removed: boolean;
 }
 
@@ -31,9 +30,9 @@ export class AppService {
   }
 
   updateDevice(device): Response {
-    const entry = this.dataHolder.find(({id}) => id === device.id);
-    if (entry) {
-      this.dataHolder[device.id] = {...device, updateTime: Date.now()};
+    const index = this.dataHolder.findIndex(({id}) => id === device.id);
+    if (index !== -1) {
+      this.dataHolder[index] = {...device, updateTime: Date.now()};
     }
     return {status: 'OK', message: JSON.stringify(device), data: this.dataHolder}
   }

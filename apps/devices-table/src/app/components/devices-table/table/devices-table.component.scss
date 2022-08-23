@@ -1,0 +1,25 @@
+:host {
+  .table-devices {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    &__row {
+      display: grid;
+      grid-template-columns: 1fr 5fr 2fr 2fr;
+      min-width: 400px;
+      gap: .5rem;
+      &.head {
+        border-bottom: 1px solid black;
+      }
+    }
+    .hoverable {
+      cursor: pointer;
+      &:hover {
+        background-color: silver;
+      }
+    }
+  }
+  .search__block {
+    padding-left: 5rem;
+  }
+}

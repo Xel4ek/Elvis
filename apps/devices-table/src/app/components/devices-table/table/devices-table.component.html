@@ -1,11 +1,24 @@
-<p>devices-table works!</p>
-<button (click)="add()">click! </button>
-<button (click)="get()">get! </button>
 <ng-container *ngIf="loading | async else table">
   <mat-spinner></mat-spinner>
 </ng-container>
 <ng-template #table>
-  <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
-    <elvis-device *ngFor="let device of devices | async" [device]="device" cdkDrag></elvis-device>
+  <div class="search__block">
+    <mat-form-field appearance="outline">
+      <mat-label>Фильтрация по названию</mat-label>
+      <input matInput #input>
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </div>
+  <div class="table-devices" style="padding: 0 .5rem">
+     <div class="table-devices__row head">
+       <div class="hoverable">ID</div>
+       <div>Название </div>
+       <div>Тип устройства</div>
+       <div>Разрешения</div>
+     </div>
+    <elvis-device class="table-devices__row hoverable" *ngFor="let device of devices | async" [device]="device" (click)="edit(device)"></elvis-device>
+    <button mat-button  type="button" (click)="edit()">
+      Добавить новое устройство
+    </button>
   </div>
 </ng-template>

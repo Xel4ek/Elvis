@@ -1,2 +1,19 @@
-{{device | json}} <---
+<div [title]="device.id">
+  {{device.id}}
+</div>
+<div [title]="device.title">
+  {{device.title}}
+</div>
+<div [title]="device.type">
+  {{device.type}}
+</div>
+<div>
+  <mat-chip-list aria-label="Разрешения" *ngFor="let resolution of device.resolutions">
+    <mat-chip>{{resolution.width}}</mat-chip> -
+    <mat-chip>{{resolution.height}}</mat-chip>
+  </mat-chip-list>
+</div>
+<!--<div (click)="click()">-->
+<!--  {{device | json}} <-&#45;&#45;-->
+<!--</div>-->
 
