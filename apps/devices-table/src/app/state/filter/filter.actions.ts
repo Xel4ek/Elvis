@@ -1,4 +1,4 @@
-export class FilterAction {
-  static readonly type = '[Filter] Add item';
+export class UpdateFilter {
+  static readonly type = '[Filter] Update';
   constructor(public payload: string) { }
 }

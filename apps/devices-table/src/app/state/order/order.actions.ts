@@ -1,4 +1,3 @@
-export class OrderAction {
-  static readonly type = '[Order] Add item';
-  constructor(public payload: string) { }
+export class ToggleOrder {
+  static readonly type = '[Order] Toggle Order';
 }

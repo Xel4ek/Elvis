@@ -3,7 +3,7 @@
   <form [formGroup]="form" class="form__edit">
   <mat-form-field appearance="fill" >
     <mat-label>Название устройства</mat-label>
-    <input matInput maxlength="140" placeholder="Моя камера" formControlName="title">
+    <input matInput maxlength="140" placeholder="Моя камера" formControlName="title" autocomplete="off">
     <mat-hint align="end">Символов {{form.controls['title'].value?.length ?? 0}}/140</mat-hint>
     <mat-error *ngIf="formTitle?.invalid">Поле не может быть пустым</mat-error>
   </mat-form-field>
@@ -22,13 +22,13 @@
     <mat-form-field>
 <!--      <>-->
       <mat-label>Расширение по ширине</mat-label>
-        <input matInput formControlName="width" type="number">
+        <input matInput formControlName="width" type="number" autocomplete="off">
       <span matSuffix>пикс.</span>
       <mat-error *ngIf="resolutions.controls[i].get('width')?.invalid">Поле не может быть пустым</mat-error>
     </mat-form-field>
         <mat-form-field>
           <mat-label>Расширение по высоте</mat-label>
-        <input matInput formControlName="height" type="number">
+        <input matInput formControlName="height" type="number" autocomplete="off">
           <span matSuffix>пикс.</span>
           <mat-error *ngIf="resolutions.controls[i].get('height')?.invalid">Поле не может быть пустым</mat-error>
 

@@ -6,6 +6,8 @@ import {map, tap} from "rxjs";
 import {ResponseInterface} from "./response.interface";
 import {DeviceInterface} from "./device.interface";
 import {patch} from "@ngxs/store/operators";
+import {FilterState, FilterStateModel} from "../filter/filter.state";
+import {OrderState, OrderStateModel} from "../order/order.state";
 
 export class DevicesStateModel {
   public items!: DeviceInterface[];
@@ -24,9 +26,17 @@ const defaults = {
 })
 @Injectable()
 export class DevicesState {
-  @Selector()
-  static devices({items}: DevicesStateModel) {
-    return items;
+  @Selector([FilterState, OrderState])
+  static devices({items}: DevicesStateModel, {pattern}: FilterStateModel, {direction}: OrderStateModel) {
+    return items.filter(el => el.title.search(pattern) !== -1).sort((a, b) => {
+      if (direction === 'ASC') {
+        return a.id - b.id;
+      }
+      if (direction === 'DESC') {
+        return  b.id - a.id
+      }
+      return 0;
+    });
   }
 
   @Selector()
@@ -47,7 +57,6 @@ export class DevicesState {
   @Action(GetDevicesAction)
   get({setState}: StateContext<DevicesStateModel>) {
     return this.apiService.get<ResponseInterface>().pipe(map(data => {
-      console.log(data);
       setState({items: data.data, loading: false})
     }))
   }

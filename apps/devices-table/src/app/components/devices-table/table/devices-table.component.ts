@@ -1,12 +1,15 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
 import {Select, Store} from "@ngxs/store";
 import {DevicesState} from "../../../state/devices/devices.state";
-import {first, Observable} from "rxjs";
+import {first, Observable, Subscription, tap} from "rxjs";
 import {DeviceInterface} from "../../../state/devices/device.interface";
 import {AddDevicesAction, ChangeDevicesAction, GetDevicesAction} from "../../../state/devices/devices.actions";
-import {CdkDragDrop} from "@angular/cdk/drag-drop";
 import {EditDeviceComponent} from "../edit-device/edit-device.component";
 import {MatDialog} from "@angular/material/dialog";
+import {FormControl} from "@angular/forms";
+import {UpdateFilter} from "../../../state/filter/filter.actions";
+import {ToggleOrder} from "../../../state/order/order.actions";
+import {OrderState} from "../../../state/order/order.state";
 
 @Component({
   selector: 'elvis-devices-table',
@@ -14,22 +17,21 @@ import {MatDialog} from "@angular/material/dialog";
   styleUrls: ['./devices-table.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DevicesTableComponent implements OnInit {
-  @Select(DevicesState.devices) devices?: Observable<DeviceInterface[]>;
-  @Select(DevicesState.loading) loading?: Observable<boolean>;
-  constructor(private readonly store:Store, private readonly dialog:MatDialog) {}
+export class DevicesTableComponent implements OnInit, OnDestroy {
+  @Select(DevicesState.devices) $devices?: Observable<DeviceInterface[]>;
+  @Select(DevicesState.loading) $loading?: Observable<boolean>;
+  @Select(OrderState.direction) $direction?: Observable<'ASC' | 'DESC'>
+  searchFilter: FormControl;
+  subscription: Subscription;
+  constructor(private readonly store:Store, private readonly dialog:MatDialog) {
+    this.searchFilter = new FormControl('');
+    this.subscription = this.searchFilter.valueChanges.pipe(tap(value =>
+      this.store.dispatch(new UpdateFilter(value))
+    )).subscribe()
+  }
 
   ngOnInit(): void {
     this.store.dispatch(new GetDevicesAction()).pipe(first()).subscribe()
-  }
-
-  drop(event: CdkDragDrop<string[]>) {
-    console.log(event.previousIndex, event.currentIndex)
-    // moveItemInArray(this.movies, event.previousIndex, event.currentIndex);
-  }
-
-  get() {
-    this.store.dispatch(new GetDevicesAction()).subscribe(console.log);
   }
 
   edit(device?: DeviceInterface) {
@@ -56,5 +58,14 @@ export class DevicesTableComponent implements OnInit {
           }
         }
       });
+  }
+
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  changeOrder() {
+    this.store.dispatch(new ToggleOrder())
   }
 }

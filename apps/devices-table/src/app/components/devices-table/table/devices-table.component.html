@@ -1,22 +1,27 @@
-<ng-container *ngIf="loading | async else table">
+<ng-container *ngIf="$loading | async else table">
   <mat-spinner></mat-spinner>
 </ng-container>
 <ng-template #table>
   <div class="search__block">
     <mat-form-field appearance="outline">
       <mat-label>Фильтрация по названию</mat-label>
-      <input matInput #input>
+      <input matInput [formControl]="searchFilter" autocomplete="off">
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
   </div>
   <div class="table-devices" style="padding: 0 .5rem">
      <div class="table-devices__row head">
-       <div class="hoverable">ID</div>
+       <div class="hoverable" (click)="changeOrder()" style="display: flex; align-items: center"><span>ID</span>
+         <ng-container *ngIf="$direction | async as direction">
+           <mat-icon *ngIf="direction === 'ASC'">arrow_drop_down</mat-icon>
+           <mat-icon *ngIf="direction === 'DESC'">arrow_drop_up</mat-icon>
+         </ng-container>
+       </div>
        <div>Название </div>
        <div>Тип устройства</div>
        <div>Разрешения</div>
      </div>
-    <elvis-device class="table-devices__row hoverable" *ngFor="let device of devices | async" [device]="device" (click)="edit(device)"></elvis-device>
+    <elvis-device class="table-devices__row hoverable" *ngFor="let device of $devices | async" [device]="device" (click)="edit(device)"></elvis-device>
     <button mat-button  type="button" (click)="edit()">
       Добавить новое устройство
     </button>
