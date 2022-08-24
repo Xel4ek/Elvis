@@ -2,6 +2,7 @@
   <mat-spinner></mat-spinner>
 </ng-container>
 <ng-template #table>
+
   <div class="search__block">
     <mat-form-field appearance="outline">
       <mat-label>Фильтрация по названию</mat-label>
@@ -9,7 +10,7 @@
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
   </div>
-  <div class="table-devices" style="padding: 0 .5rem">
+  <div class="table-devices" style="padding: 0 .5rem" >
      <div class="table-devices__row head">
        <div class="hoverable" (click)="changeOrder()" style="display: flex; align-items: center"><span>ID</span>
          <ng-container *ngIf="$direction | async as direction">
@@ -21,7 +22,16 @@
        <div>Тип устройства</div>
        <div>Разрешения</div>
      </div>
-    <elvis-device class="table-devices__row hoverable" *ngFor="let device of $devices | async" [device]="device" (click)="edit(device)"></elvis-device>
+    <ng-container *ngIf=" {devices: $devices | async} as data">
+      <ng-container *ngIf="data.devices?.length else placeholder">
+        <elvis-device class="table-devices__row hoverable" *ngFor="let device of data.devices" [device]="device" (click)="edit(device)"></elvis-device>
+      </ng-container>
+    </ng-container>
+    <ng-template #placeholder>
+      <div>
+        Нет доступных устройств, нажмите 'Добавить новое устройство' что бы добавить новое устройство
+      </div>
+    </ng-template>
     <button mat-button  type="button" (click)="edit()">
       Добавить новое устройство
     </button>

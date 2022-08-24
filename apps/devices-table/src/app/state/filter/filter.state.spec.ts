@@ -13,7 +13,7 @@ describe('Filter actions', () => {
     store = TestBed.inject(Store);
   });
 
-  it('should create an action Update Filter', () => {
+  it('should create an action Update Filter', async () => {
     expect(store.selectSnapshot((state) => state.filter.pattern)).toBe('');
     store.dispatch(new UpdateFilter('hello'));
     expect(store.selectSnapshot((state) => state.filter.pattern)).toBe('hello');

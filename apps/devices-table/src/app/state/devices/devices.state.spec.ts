@@ -45,7 +45,7 @@ describe('Devices actions', () => {
       loading: true,
     });
   });
-  it('should load devices', () => {
+  it('should load devices', async () => {
     store.dispatch(new GetDevicesAction());
     expect(apiService.get).toHaveBeenCalled();
     expect(store.selectSnapshot((state) => state.devices.items)).toEqual(
@@ -53,7 +53,7 @@ describe('Devices actions', () => {
     );
     expect(store.selectSnapshot((state) => state.devices.loading)).toBe(false);
   });
-  it('should change devices', () => {
+  it('should change devices', async () => {
     const updated = { ...mockDevices[0], id: 12 };
     store.dispatch(new ChangeDevicesAction(updated));
     expect(apiService.put).toBeCalledWith(updated);
@@ -62,7 +62,7 @@ describe('Devices actions', () => {
     );
   });
 
-  it('should add devices', () => {
+  it('should add devices', async () => {
     store.dispatch(new AddDevicesAction(mockDevices[0]));
     expect(apiService.post).toBeCalledWith(mockDevices[0]);
     expect(store.selectSnapshot((state) => state.devices.items)).toEqual(
@@ -70,7 +70,7 @@ describe('Devices actions', () => {
     );
   });
 
-  it('should selectors work', () => {
+  it('should selectors work', async () => {
     const devices = {
       loading: false,
       items: [
